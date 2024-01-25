@@ -1,0 +1,68 @@
+data("SeaSlugs")
+AOVseaslugs=aov(Percent~as.factor(Time),data=SeaSlugs)
+summary(AOVseaslugs)
+TukeyHSD(AOVseaslugs)
+plot(TukeyHSD(AOVseaslugs))
+
+data(Blood1)
+AOVblood1=aov(SystolicBP~as.factor(Smoke),data=Blood1)
+summary(AOVblood1)
+leveneTest(139.1838,10.84256*as.factor(Smoke), data=Blood1)
+data1<-subset(Blood1,Overwt==0)
+mean(data1$SystolicBP)
+data2<-subset(Blood1,Overwt==1)
+mean(data2$SystolicBP)
+data3<-subset(Blood1,Overwt==2)
+mean(data3$SystolicBP)
+
+data(Olives)
+AOVOlives=lm(sqrt(sqrt(sqrt(Fenthion)))~Day,data=Olives)
+summary(AOVOlives)
+plot(AOVOlives)
+
+attach(airquality)
+Month <- factor(Month, labels = month.abb[5:9])
+## These give warnings because of ties :
+pairwise.wilcox.test(Ozone, Month)
+pairwise.wilcox.test(Ozone, Month, p.adjust.method = "bonf")
+detach()
+
+data("CloudSeeding")
+data1<-subset(CloudSeeding,CloudSeeding$Seeded=="U")
+data2<-subset(CloudSeeding,CloudSeeding$Seeded=="S")
+qqnorm(data1$NWC)
+qqnorm(data2$NWC)
+attach(airquality)
+Month <- factor(Month, labels = month.abb[5:9])
+## These give warnings because of ties :
+pairwise.wilcox.test(Ozone, Month)
+pairwise.wilcox.test(Ozone, Month, p.adjust.method = "bonf")
+detach()
+
+data("CloudSeeding2")
+AOV=aov(NWC~as.factor(Period)+Seeded,data=CloudSeeding2)
+plot(AOV)
+kruskal.test(as.factor(Period)~NWC,data=CloudSeeding2)
+
+CloudSeeding$seed<-ifelse(CloudSeeding$Seeded=="s",1,0)
+wilcox.test(CloudSeeding$TE,CloudSeeding$seed)
+
+library(mosaic)
+favstats(CloudSeeding$TE~CloudSeeding$Seeded)
+kruskal.test(CloudSeeding$TE~CloudSeeding$Seeded)
+wilcox.test(CloudSeeding$seed,CloudSeeding$TE)
+
+
+data("Swahili")
+AOVOlives=ancova(Attitude.Score~as.factor(Province)+as.factor(Sex),data=Swahili)
+summary(AOVOlives)
+plot(AOVOlives)
+TukeyHSD(AOVOlives)
+plot(TukeyHSD(AOVOlives))
+
+data("FruitFlies2")
+AOVff=aov(sqrt(Activity)~as.factor(Mated)+Size,data=FruitFlies2)
+summary(AOVOlives)
+plot(AOVOlives)
+TukeyHSD(AOVff)
+plot(TukeyHSD(AOVff))
